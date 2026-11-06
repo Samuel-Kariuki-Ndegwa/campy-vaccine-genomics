@@ -1,0 +1,127 @@
+﻿project:
+  name: "Campy Vaccine Genomics"
+  version: "1.0.0"
+  project_lead: "Samuel Ndegwa"
+  description: "Reproducible population genomics and vaccine antigen research in Campylobacter jejuni"
+
+organism:
+  scientific_name: "Campylobacter jejuni"
+  ncbi_taxonomy_id: 197
+
+geography:
+  countries:
+    - name: "Kenya"
+      iso3: "KEN"
+      search_aliases:
+        - "Kenya"
+    - name: "Ethiopia"
+      iso3: "ETH"
+      search_aliases:
+        - "Ethiopia"
+    - name: "Tanzania"
+      iso3: "TZA"
+      search_aliases:
+        - "Tanzania"
+        - "United Republic of Tanzania"
+    - name: "Uganda"
+      iso3: "UGA"
+      search_aliases:
+        - "Uganda"
+
+collection_period:
+  start_date: "2017-01-01"
+  end_date: null
+  end_date_policy: "Use the actual database search cut-off date for each execution"
+  date_basis: "Specimen collection date"
+  never_substitute:
+    - "Sequencing date"
+    - "Submission date"
+    - "Assembly release date"
+    - "Publication date"
+
+date_recovery:
+  enabled: true
+  investigate_linked_publications: true
+  investigate_supplementary_material: true
+  preserve_original_submitted_date: true
+  preserve_recovered_date_separately: true
+  evidence_categories:
+    A: "Exact date submitted with sequence metadata"
+    B: "Exact isolate-matched date recovered from publication or supplement"
+    C: "Study-level collection period without isolate-specific date"
+    D: "No reliable collection-date evidence"
+  do_not_infer_isolate_dates_from_study_period: true
+
+sequence_requirements:
+  sequencing_type: "Whole-genome sequencing"
+  accepted_data_types:
+    - "Genome assembly"
+    - "Raw sequencing reads"
+  assembly_format: "FASTA"
+  raw_read_formats:
+    - "FASTQ"
+    - "Compressed FASTQ"
+  retain_assembly_and_reads_for_same_isolate: true
+  retrieve_raw_reads_selectively: true
+
+biological_unit:
+  primary_unit: "Independent bacterial isolate"
+  database_records_are_not_independent_isolates: true
+  reconcile_multiple_runs_per_isolate: true
+  reconcile_assembly_versions: true
+
+sources:
+  ncbi_assembly:
+    enabled: true
+    priority: 1
+  ncbi_biosample:
+    enabled: true
+    priority: 2
+  ncbi_sra:
+    enabled: true
+    priority: 3
+  pubmlst:
+    enabled: true
+    priority: 4
+  ena:
+    enabled: true
+    priority: 5
+    role: "Supplementary retrieval and cross-checking"
+
+eligibility:
+  retain_records_with_missing_dates: true
+  retain_records_with_study_level_dates: true
+  retain_historical_records_separately: true
+  retain_unresolved_records_for_review: true
+  require_country_evidence: true
+  require_campylobacter_jejuni_identity: true
+
+deduplication:
+  matching_priority:
+    - "BioSample accession"
+    - "Assembly accession"
+    - "SRA Run accession"
+    - "Isolate or strain identifier"
+    - "Sequence similarity"
+  do_not_deduplicate_using_country_year_or_host_alone: true
+
+quality_control:
+  thresholds: null
+  threshold_policy: "Define and document before final cohort selection"
+  apply_consistent_qc_across_sources: true
+
+reproducibility:
+  preserve_raw_metadata: true
+  preserve_original_accessions: true
+  record_database_search_dates: true
+  record_database_query_parameters: true
+  record_software_versions: true
+  record_file_checksums: true
+  prevent_silent_overwriting: true
+  generate_stage_validation_reports: true
+
+execution:
+  project_root: "."
+  configuration_file: "config/project_config.yaml"
+  log_directory: "logs"
+  output_policy: "Version outputs; never silently overwrite existing results"
